@@ -11,3 +11,27 @@ In order to get the VVTS server component up and running, the following componen
 The server component is simplistic in nature and should work with any webserver that supports php. In order to warrant sound functionality, make sure that:
 * The domain name used for this component resolves to a single IP address.
 * The IP address hosting this component is not shared with the VPN endpoint used for validating the VPN client through VVTS.
+
+## enable Apache config on port 8843
+
+cat /etc/apache2/sites-available# cat vvts-8443.conf 
+<IfModule mod_ssl.c>
+<VirtualHost *:8443>
+    ServerName vvts.surfcloud.nl
+    DocumentRoot /var/www/html
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    SSLEngine on
+    SSLCertificateFile /etc/letsencrypt/live/vvts.surfcloud.nl/fullchain.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/vvts.surfcloud.nl/privkey.pem
+    Include /etc/letsencrypt/options-ssl-apache.conf
+    <Directory /var/www/html>
+        Require all granted
+    </Directory>
+    <DirectoryMatch "/\.git">
+        Require all denied
+    </DirectoryMatch>
+</VirtualHost>
+</IfModule>
