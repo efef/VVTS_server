@@ -14,7 +14,7 @@ The server component is simplistic in nature and should work with any webserver 
 
 ## enable Apache config on port 8843
 
-cat /etc/apache2/sites-available# cat vvts-8443.conf 
+#cat /etc/apache2/sites-available# cat vvts-8443.conf 
 <IfModule mod_ssl.c>
 <VirtualHost *:8443>
     ServerName vvts.surfcloud.nl
